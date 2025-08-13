@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function() {
 
     const email = {
@@ -50,6 +51,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 alertaExito.remove(); 
             }, 3000);
         }, 3000);
+        enviarCorreo();
+
     }
 
     function validar(e) {
@@ -120,5 +123,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
         formulario.reset();
         comprobarEmail();
+    }
+    
+    //Funcion anonima, que se ejecuta de inmediato 
+    (function(){
+        emailjs.init("ob1ukeHtd1YemS-gA");
+    })();
+
+    function enviarCorreo(){
+    let params = {
+        email: document.getElementById("email").value,
+        subject: document.getElementById("asunto").value,
+        message: document.getElementById("mensaje").value
+    };
+    console.log(document.getElementById("email").value);
+    emailjs.send("service_zfs2kqz", "template_r885n2h", params)
+        .then(res => {
+        alert("Correo enviado con éxito");
+        })
+        .catch(err => {
+        alert("Error: " + JSON.stringify(err));
+        });
     }
 });
